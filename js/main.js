@@ -133,11 +133,9 @@
   function renderAdventureItem(adventure) {
     const item = document.createElement('div');
     item.className = 'content-item parchment fade-in';
-    item.setAttribute('role', 'button');
-    item.setAttribute('tabindex', '0');
-    item.setAttribute('aria-label', `Play ${adventure.title}`);
 
     const diffClass = getDifficultyClass(adventure.difficulty);
+    const hasSave = hasSavedProgress('adventure', adventure.id);
 
     item.innerHTML = `
       <div class="content-item-info">
@@ -149,12 +147,20 @@
         ${adventure.recommended_players ? `<span class="meta-tag">&#9876; ${escapeHtml(adventure.recommended_players)} players</span>` : ''}
         ${adventure.estimated_time ? `<span class="meta-tag">&#9200; ${escapeHtml(adventure.estimated_time)}</span>` : ''}
       </div>
-      <span class="content-item-arrow" aria-hidden="true">&#8250;</span>
+      <div class="content-item-actions">
+        ${hasSave
+          ? `<button class="btn btn-primary btn-launch" data-action="continue">Continue &#8250;</button>
+             <button class="btn btn-ghost btn-launch" data-action="restart">Start Over</button>`
+          : `<button class="btn btn-primary btn-launch" data-action="continue">Play &#8250;</button>`
+        }
+      </div>
     `;
 
-    const launch = () => launchAdventure(adventure.id);
-    item.addEventListener('click', launch);
-    item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') launch(); });
+    item.querySelector('[data-action="continue"]').addEventListener('click', () => launchAdventure(adventure.id));
+    item.querySelector('[data-action="restart"]')?.addEventListener('click', () => {
+      clearSavedProgress('adventure', adventure.id);
+      launchAdventure(adventure.id);
+    });
 
     return item;
   }
@@ -163,12 +169,10 @@
   function renderCampaignItem(campaign) {
     const item = document.createElement('div');
     item.className = 'content-item parchment fade-in';
-    item.setAttribute('role', 'button');
-    item.setAttribute('tabindex', '0');
-    item.setAttribute('aria-label', `Play campaign: ${campaign.title}`);
 
     const diffClass = getDifficultyClass(campaign.difficulty);
     const sessionCount = campaign.sessions ? campaign.sessions.length : 0;
+    const hasSave = hasSavedProgress('campaign', campaign.id);
 
     item.innerHTML = `
       <div class="content-item-info">
@@ -176,10 +180,10 @@
         <p>${escapeHtml(campaign.description)}</p>
         ${sessionCount ? `
         <div class="session-list">
-          <div class="session-list-title">Sessions</div>
+          <div class="session-list-title">Jump to Session</div>
           <div class="session-pills">
             ${campaign.sessions.map((s, i) => `
-              <button class="session-pill" data-session-id="${escapeHtml(s.id)}" data-index="${i}" title="Jump to session: ${escapeHtml(s.title)}">
+              <button class="session-pill" data-session-id="${escapeHtml(s.id)}" title="${escapeHtml(s.title)}">
                 ${i + 1}. ${escapeHtml(s.title)}
               </button>
             `).join('')}
@@ -191,26 +195,24 @@
         ${campaign.recommended_players ? `<span class="meta-tag">&#9876; ${escapeHtml(campaign.recommended_players)} players</span>` : ''}
         ${sessionCount ? `<span class="meta-tag">&#128218; ${sessionCount} sessions</span>` : ''}
       </div>
-      <span class="content-item-arrow" aria-hidden="true">&#8250;</span>
+      <div class="content-item-actions">
+        ${hasSave
+          ? `<button class="btn btn-primary btn-launch" data-action="continue">Continue &#8250;</button>
+             <button class="btn btn-ghost btn-launch" data-action="restart">Start Over</button>`
+          : `<button class="btn btn-primary btn-launch" data-action="continue">Play &#8250;</button>`
+        }
+      </div>
     `;
 
-    // Clicking the card launches from the beginning (or saved progress)
-    const launchFromStart = (e) => {
-      // Don't trigger if they clicked a session pill
-      if (e.target.closest('.session-pill')) return;
+    item.querySelector('[data-action="continue"]').addEventListener('click', () => launchCampaign(campaign.id));
+    item.querySelector('[data-action="restart"]')?.addEventListener('click', () => {
+      clearSavedProgress('campaign', campaign.id);
       launchCampaign(campaign.id);
-    };
-    item.addEventListener('click', launchFromStart);
-    item.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') launchCampaign(campaign.id);
     });
 
     // Session pill clicks
     item.querySelectorAll('.session-pill').forEach(pill => {
-      pill.addEventListener('click', e => {
-        e.stopPropagation();
-        launchCampaign(campaign.id, pill.dataset.sessionId);
-      });
+      pill.addEventListener('click', () => launchCampaign(campaign.id, pill.dataset.sessionId));
     });
 
     return item;
@@ -227,6 +229,21 @@
       url += `&session=${encodeURIComponent(sessionId)}`;
     }
     window.location.href = url;
+  }
+
+  /* ── Save Progress Helpers ──────────────────────────────── */
+  function hasSavedProgress(type, id) {
+    try {
+      return !!localStorage.getItem(`dndmaster_${type}_${id}`);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function clearSavedProgress(type, id) {
+    try {
+      localStorage.removeItem(`dndmaster_${type}_${id}`);
+    } catch (e) {}
   }
 
   /* ── Helpers ────────────────────────────────────────────── */

@@ -532,15 +532,16 @@ a:hover { color: var(--text-light); }
   background: rgba(124, 42, 42, 0.15);
 }
 
-.content-item-arrow {
-  color: var(--accent-gold-dim);
-  font-size: 1.2rem;
-  transition: transform var(--transition);
+.content-item-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
-.content-item:hover .content-item-arrow {
-  transform: translateX(4px);
-  color: var(--accent-gold);
+.btn-launch {
+  font-size: 0.85rem;
+  padding: 0.45rem 1.1rem;
 }
 
 /* ── Campaign sessions list ───────────────────────────────── */
