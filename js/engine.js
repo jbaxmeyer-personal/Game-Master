@@ -41,18 +41,10 @@
 
   const actionSection     = document.getElementById('action-section');
   const actionButtons     = document.getElementById('action-buttons');
-  const customActionArea  = document.getElementById('custom-action-area');
-  const customActionInput = document.getElementById('custom-action-input');
-  const customActionSubmit= document.getElementById('custom-action-submit');
-
   const rollSection       = document.getElementById('roll-section');
   const rollPrompt        = document.getElementById('roll-prompt');
   const rollSkillName     = document.getElementById('roll-skill-name');
   const rollDcDisplay     = document.getElementById('roll-dc-display');
-  const rollDcValue       = document.getElementById('roll-dc-value');
-  const customRollFields  = document.getElementById('custom-roll-fields');
-  const customSkillSelect = document.getElementById('custom-skill-select');
-  const customDcInput     = document.getElementById('custom-dc-input');
   const rollResultInput   = document.getElementById('roll-result-input');
   const submitRollBtn     = document.getElementById('submit-roll-btn');
   const cancelRollBtn     = document.getElementById('cancel-roll-btn');
@@ -403,9 +395,7 @@
       btn.className = 'action-btn';
       btn.setAttribute('data-index', index);
 
-      const rollHint = action.requires_roll === false
-        ? (action.check ? `${action.check} DC ${action.dc}` : '')
-        : (action.check ? `${action.check} DC ${action.dc}` : '');
+      const rollHint = action.check ? `${action.check} check` : '';
 
       btn.innerHTML = `
         <span class="action-indicator" aria-hidden="true"></span>
@@ -416,13 +406,6 @@
       btn.addEventListener('click', () => selectAction(action, btn));
       actionButtons.appendChild(btn);
     });
-
-    // Custom action
-    if (scene.allow_custom) {
-      customActionArea.style.display = 'block';
-    } else {
-      customActionArea.style.display = 'none';
-    }
 
     showActionSection();
   }
@@ -438,51 +421,24 @@
     // Disable all action buttons
     setActionsDisabled(true);
 
-    if (action.requires_roll === false && !action.check) {
-      // No roll needed — show continue button or go straight
-      if (action.next_scene) {
-        showContinueSection(() => goToScene(action.next_scene));
-      }
-    } else if (action.check) {
-      // Roll required
-      showRollSection(action.check, action.dc, false);
-    } else if (action.requires_roll === true) {
-      // Requires roll but no specific check defined — show generic
-      showRollSection('Skill', 10, false);
+    if (action.check) {
+      showRollSection(action.check, action.dc);
     } else {
-      // Fallback: just continue
+      // No roll needed — show continue button
       if (action.next_scene) {
         showContinueSection(() => goToScene(action.next_scene));
       }
     }
-  }
-
-  function selectCustomAction(actionText) {
-    if (!actionText.trim()) return;
-    state.isCustomAction = true;
-    state.selectedAction = { label: actionText, custom: true };
-    setActionsDisabled(true);
-    customActionInput.disabled = true;
-    customActionSubmit.disabled = true;
-    showRollSection(null, null, true);
   }
 
   /* ══════════════════════════════════════════════════════════
      Roll Section
   ══════════════════════════════════════════════════════════ */
-  function showRollSection(skill, dc, isCustom) {
+  function showRollSection(skill, dc) {
     hideContinueSection();
     hideOutcome();
 
-    customRollFields.style.display = isCustom ? 'flex' : 'none';
-
-    if (!isCustom) {
-      rollSkillName.textContent = skill || 'Skill';
-      rollDcValue.textContent   = dc || '?';
-      rollDcDisplay.style.display = 'block';
-    } else {
-      rollDcDisplay.style.display = 'none';
-    }
+    rollSkillName.textContent = skill || 'Skill';
 
     rollResultInput.value = '';
     rollSection.classList.add('visible');
@@ -504,21 +460,13 @@
       return;
     }
 
-    let skill, dc, action;
-
-    if (state.isCustomAction) {
-      skill = customSkillSelect.value;
-      dc    = parseInt(customDcInput.value, 10) || 12;
-      action = state.selectedAction;
-    } else {
-      action = state.selectedAction;
-      skill  = action.check;
-      dc     = action.dc;
-    }
+    const action = state.selectedAction;
+    const skill  = action.check;
+    const dc     = action.dc;
 
     const success = rollResult >= dc;
     hideRollSection();
-    showOutcome(success, rollResult, dc, skill, action);
+    showOutcome(success, skill, action);
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -539,7 +487,7 @@
   /* ══════════════════════════════════════════════════════════
      Outcome Box
   ══════════════════════════════════════════════════════════ */
-  function showOutcome(success, rollResult, dc, skill, action) {
+  function showOutcome(success, skill, action) {
     outcomeBox.classList.add('visible');
     outcomeBox.classList.remove('success', 'failure');
 
@@ -550,7 +498,7 @@
     if (success) {
       outcomeBox.classList.add('success');
       outcomeLabel.innerHTML = '&#10003; Success';
-      outcomeText.textContent = buildSuccessText(rollResult, dc, skill, action);
+      outcomeText.textContent = buildSuccessText(rollResult, skill);
 
       if (action.success_bonus) {
         outcomeBonus.textContent = action.success_bonus;
@@ -561,7 +509,7 @@
     } else {
       outcomeBox.classList.add('failure');
       outcomeLabel.innerHTML = '&#10007; Failure';
-      outcomeText.textContent = buildFailureText(rollResult, dc, skill, action);
+      outcomeText.textContent = buildFailureText(rollResult, skill);
       outcomeBonus.style.display = 'none';
     }
 
@@ -570,14 +518,6 @@
       outcomeNextBtn.onclick = () => {
         hideOutcome();
         goToScene(nextSceneId);
-      };
-      outcomeNextBtn.style.display = 'inline-block';
-    } else if (state.isCustomAction) {
-      // Custom action: no predefined next scene — re-render scene so players pick how to proceed
-      outcomeNextBtn.textContent = 'Continue Story →';
-      outcomeNextBtn.onclick = () => {
-        hideOutcome();
-        goToScene(state.currentSceneId);
       };
       outcomeNextBtn.style.display = 'inline-block';
     } else {
@@ -591,26 +531,12 @@
     outcomeBox.classList.remove('visible', 'success', 'failure');
   }
 
-  function buildSuccessText(roll, dc, skill, action) {
-    if (state.isCustomAction) {
-      return `You rolled a ${roll} against DC ${dc} — a success! Your DM narrates the outcome, then pick the closest option below to continue the story.`;
-    }
-    const margin = roll - dc;
-    if (margin >= 5) {
-      return `You rolled a ${roll} against DC ${dc} — a resounding success! Your ${skill} check exceeds expectations.`;
-    }
-    return `You rolled a ${roll} against DC ${dc} — success! Your ${skill} check pays off.`;
+  function buildSuccessText(roll, skill) {
+    return `Your ${skill} check succeeds — well done.`;
   }
 
-  function buildFailureText(roll, dc, skill, action) {
-    if (state.isCustomAction) {
-      return `You rolled a ${roll} against DC ${dc} — not quite enough. Your DM narrates what goes wrong, then pick the closest option below to continue.`;
-    }
-    const margin = dc - roll;
-    if (margin >= 5) {
-      return `You rolled a ${roll} against DC ${dc} — a clear failure. Your ${skill} check falls well short. Things do not go as planned.`;
-    }
-    return `You rolled a ${roll} against DC ${dc} — just short. Your ${skill} check narrowly misses. Perhaps next time.`;
+  function buildFailureText(roll, skill) {
+    return `Your ${skill} check falls short. Things do not go as planned.`;
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -783,18 +709,7 @@
       hideContinueSection();
       setActionsDisabled(false);
       state.selectedAction = null;
-      state.isCustomAction = false;
       actionButtons.querySelectorAll('.action-btn').forEach(b => b.classList.remove('selected'));
-      customActionInput.disabled = false;
-      customActionSubmit.disabled = false;
-    });
-
-    // Custom action
-    customActionSubmit.addEventListener('click', () => {
-      selectCustomAction(customActionInput.value);
-    });
-    customActionInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') selectCustomAction(customActionInput.value);
     });
 
     // Outcome next

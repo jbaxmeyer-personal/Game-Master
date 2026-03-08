@@ -62,20 +62,6 @@
     <div class="action-section" id="action-section">
       <div class="action-section-title">Choose Your Action</div>
       <div class="action-buttons" id="action-buttons"></div>
-      <div class="custom-action-area" id="custom-action-area" style="display:none;">
-        <div class="custom-action-label">Or describe your own action:</div>
-        <div class="custom-input-row">
-          <input
-            type="text"
-            class="custom-input"
-            id="custom-action-input"
-            placeholder="I want to try..."
-            maxlength="200"
-            autocomplete="off"
-          />
-          <button class="btn" id="custom-action-submit">Go</button>
-        </div>
-      </div>
     </div>
 
     <!-- Roll Section -->
@@ -85,35 +71,7 @@
           Make a <strong id="roll-skill-name">Perception</strong> check
         </div>
         <div class="roll-dc-display" id="roll-dc-display">
-          Difficulty Class: <strong id="roll-dc-value">12</strong> — roll your dice and enter the result below.
-        </div>
-
-        <!-- Fields shown only for custom actions -->
-        <div class="custom-roll-fields" id="custom-roll-fields" style="display:none;">
-          <div class="custom-roll-field">
-            <label for="custom-skill-select">Skill / Ability</label>
-            <select id="custom-skill-select">
-              <option value="Strength">Strength</option>
-              <option value="Dexterity">Dexterity</option>
-              <option value="Constitution">Constitution</option>
-              <option value="Intelligence">Intelligence</option>
-              <option value="Wisdom">Wisdom</option>
-              <option value="Charisma">Charisma</option>
-              <option value="Perception">Perception</option>
-              <option value="Stealth">Stealth</option>
-              <option value="Persuasion">Persuasion</option>
-              <option value="Intimidation">Intimidation</option>
-              <option value="Investigation">Investigation</option>
-              <option value="Athletics">Athletics</option>
-              <option value="Acrobatics">Acrobatics</option>
-              <option value="Deception">Deception</option>
-              <option value="Attack">Attack Roll</option>
-            </select>
-          </div>
-          <div class="custom-roll-field">
-            <label for="custom-dc-input">Difficulty Class (DC)</label>
-            <input type="number" id="custom-dc-input" value="12" min="1" max="30" />
-          </div>
+          Roll your dice and add your modifier — then enter the total below.
         </div>
 
         <div class="roll-input-row">
