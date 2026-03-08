@@ -1,0 +1,128 @@
+{
+  "id": "marvel-heroes-save-the-day",
+  "title": "Marvel Heroes Save the Day!",
+  "type": "adventure",
+  "description": "Loki has stolen ALL the ice cream in New York City and the kids are crying! Spider-Man, Iron Man, Captain America, Thor, and the Hulk must team up to track down Loki's hideout and save the day. A short, simple adventure perfect for young Marvel fans and their action figures.",
+  "recommended_players": "1-2 (parent + child)",
+  "estimated_time": "20-30 minutes",
+  "difficulty": "Beginner",
+  "starting_scene": "scene_001",
+  "scenes": {
+    "scene_001": {
+      "title": "Avengers Assemble!",
+      "narrative": "RING RING! The alarm goes off at Avengers Tower! Captain America runs to the big screen. 'Avengers! Something terrible has happened — Loki has used his magic to steal ALL the ice cream in New York City! Every scoop, every cone, every tub — GONE! The kids in Central Park are crying. We need to find Loki's hideout and get that ice cream back. Who's going on this mission?'",
+      "dm_note": "Let your child pick which hero or heroes they want to play! Hold up the action figures and ask 'Who should we send?' They can pick one or all of them — there are no wrong answers. Make the alarm sound yourself (BEEP BEEP BEEP!) and do a silly Captain America voice. If they want to be ALL the heroes at once, that's perfect.",
+      "suggested_actions": [
+        { "label": "Send Spider-Man to swing through the city and look for clues!", "requires_roll": false, "next_scene": "scene_002" },
+        { "label": "Send Iron Man to fly up high and scan the city with his suit!", "requires_roll": false, "next_scene": "scene_002" },
+        { "label": "Send the whole team — everyone go together!", "requires_roll": false, "next_scene": "scene_002" }
+      ],
+      "allow_custom": true
+    },
+    "scene_002": {
+      "title": "Searching New York City",
+      "narrative": "The heroes zoom out into the city! The streets are very strange today — no ice cream trucks, no ice cream shops, nothing! But then... the hero spots something. A trail of green sparkly magic dust on the ground! It leads toward the docks. And there's a little kid sitting on a bench, looking very sad. 'I saw a man with a funny hat,' the kid sniffles. 'He had a big bag and there was magic everywhere. He went THAT way!'",
+      "dm_note": "Have your child move the action figure around the table or floor — they're searching the city! Do a sad little kid voice for the clue. Point in a direction dramatically. You can let them roll a dice here if they want — any result means they find the clue, it's just fun to roll! Say 'You found a clue! The magic trail leads to the docks!'",
+      "suggested_actions": [
+        { "label": "Follow the sparkly magic trail to the docks!", "requires_roll": false, "next_scene": "scene_003" },
+        { "label": "Roll for Investigation to search for more clues", "check": "Investigation", "dc": 6, "success_scene": "scene_002b", "failure_scene": "scene_003", "success_bonus": "You find a second clue — a golden horn from Loki's helmet was dropped on the ground! Now you know exactly where he went." }
+      ],
+      "allow_custom": true
+    },
+    "scene_002b": {
+      "title": "Extra Clue!",
+      "narrative": "Sharp eyes! There on the ground is a piece of golden horn — it must have broken off Loki's helmet when he was running away! And nearby, frozen in a tiny block of magical ice, is a postcard. It says: 'SECRET HIDEOUT — The Big Boat at Dock 7. Do not disturb. — L.' What a sneaky villain!",
+      "dm_note": "Make a big deal of this find! 'Oh wow, you found an EXTRA clue! You're so smart!' Pick up the action figure and have it 'examine' the clue. Then point to 'Dock 7' dramatically.",
+      "suggested_actions": [
+        { "label": "Race to Dock 7!", "requires_roll": false, "next_scene": "scene_003" }
+      ],
+      "allow_custom": true
+    },
+    "scene_003": {
+      "title": "Loki's Secret Hideout",
+      "narrative": "There it is — a GIANT boat at Dock 7, covered in green and gold decorations. It's Loki's hideout! But there are two big Frost Giants guarding the door. They are VERY tall and VERY blue and they are blocking the way. The Frost Giants cross their arms and say 'NOBODY GETS PAST US!' in a very rumbly voice. Oh no! How will the heroes get inside?",
+      "dm_note": "Use a deep silly voice for the Frost Giants — cross your arms and do the pose! Let your child decide how to get past. All options are valid and fun. If they say something creative like 'Spider-Man ties them up!' just go with it and move to the next scene. Encourage them to make their action figure do the action physically!",
+      "suggested_actions": [
+        { "label": "Spider-Man shoots webs to tie up the Frost Giants!", "check": "Attack", "dc": 7, "success_scene": "scene_004", "failure_scene": "scene_003b", "success_bonus": "THWIP THWIP! The webs wrap around the Frost Giants and they fall over like big blue trees! The path is clear!" },
+        { "label": "Thor throws Mjolnir to knock them down!", "check": "Attack", "dc": 7, "success_scene": "scene_004", "failure_scene": "scene_003b", "success_bonus": "BOOM! The hammer hits them both and they tumble into the water with a giant SPLASH!" },
+        { "label": "The Hulk just walks up and says RAARRR very loudly!", "check": "Intimidation", "dc": 6, "success_scene": "scene_004", "failure_scene": "scene_003b", "success_bonus": "The Frost Giants look at the Hulk... and they run away screaming! Nobody messes with the Hulk!" },
+        { "label": "Iron Man blasts them with repulsor rays!", "check": "Attack", "dc": 7, "success_scene": "scene_004", "failure_scene": "scene_003b", "success_bonus": "PEW PEW PEW! The repulsor blasts send the Frost Giants flying through the air!" }
+      ],
+      "allow_custom": true
+    },
+    "scene_003b": {
+      "title": "Try Again!",
+      "narrative": "The Frost Giants didn't go down that easy — they're still blocking the door! But the heroes aren't giving up. Try something else!",
+      "dm_note": "If the roll failed, just narrate a near miss and let them try a different approach or try again. At age 3, the goal is fun, not failure — you can quietly nudge the dice result if needed. Say 'Ooh, so close! What should the hero try next?'",
+      "suggested_actions": [
+        { "label": "Try a different power or a big team attack!", "check": "Attack", "dc": 6, "success_scene": "scene_004", "failure_scene": "scene_004", "success_bonus": "The heroes combine their powers and the Frost Giants go flying! INTO THE WATER!" }
+      ],
+      "allow_custom": true
+    },
+    "scene_004": {
+      "title": "Inside the Boat",
+      "narrative": "The heroes slip inside the boat. It is VERY cold in here — Loki has used his magic to keep all the ice cream frozen! There are towers and towers of ice cream tubs EVERYWHERE — chocolate, strawberry, vanilla, and flavors nobody has ever heard of! And sitting on a big golden throne in the middle, looking very pleased with himself, is LOKI. He sees the heroes and stands up. 'Oh,' he says, sounding bored. 'I suppose you've come for the ice cream. How dreadfully predictable.'",
+      "dm_note": "Do your best Loki voice — a bit snooty and dramatic! Point to the action figures as Loki 'notices' them. If your child has a Loki figure, now is a great time to bring it out! Stack some blocks or pillows around to represent the ice cream towers. Make the scene feel big and fun.",
+      "suggested_actions": [
+        { "label": "Tell Loki to give the ice cream back right now!", "requires_roll": false, "next_scene": "scene_005" },
+        { "label": "Challenge Loki to a fight!", "requires_roll": false, "next_scene": "scene_005b" }
+      ],
+      "allow_custom": true
+    },
+    "scene_005": {
+      "title": "The Challenge",
+      "narrative": "Loki laughs — 'HA! You want the ice cream back? Very well. But I am bored, and I want entertainment. Defeat me in a contest of... ROARING! Whoever roars the loudest wins. If you win, I return the ice cream. If I win, you have to admit that Loki is the greatest of all!' He takes a big deep breath, getting ready to roar.",
+      "dm_note": "This is the moment — have a ROARING CONTEST with your child! Loki goes first (you do a silly medium roar). Then let your child roar as loud as they can — and of course they WIN, no matter what. Make a huge deal of it: 'Oh no! That roar was TOO POWERFUL! I... I cannot believe it! You win!' Loki is dramatic about losing.",
+      "suggested_actions": [
+        { "label": "Roar as loud as you can! (Everyone roars together!)", "check": "Intimidation", "dc": 5, "success_scene": "scene_006", "failure_scene": "scene_006", "success_bonus": "The roar shakes the whole boat! Loki covers his ears! 'AUGH! Fine! FINE! Take your ridiculous ice cream!'" }
+      ],
+      "allow_custom": true
+    },
+    "scene_005b": {
+      "title": "Hero vs. Loki!",
+      "narrative": "Loki narrows his eyes. 'Oh, you want to FIGHT? Very well.' He raises his scepter — green magic crackles around it! 'Come then, little heroes. Show me what you've got!' The fight is ON!",
+      "dm_note": "Let your child make their hero action figure 'fight' the Loki figure (or your hand, pretending to be Loki). Make big dramatic sound effects — KAPOW, BOOM, ZAP! After a few exchanges, have Loki dramatically stagger: 'Impossible... I have been... defeated... by such tiny heroes!' Ham it up completely.",
+      "suggested_actions": [
+        { "label": "Hit Loki with your best attack!", "check": "Attack", "dc": 7, "success_scene": "scene_006", "failure_scene": "scene_005c", "success_bonus": "POW! Direct hit! Loki spins around dramatically and crashes into his own throne! 'I... concede,' he mutters, rubbing his head." },
+        { "label": "Everyone attack at the same time — AVENGERS ASSEMBLE!", "check": "Attack", "dc": 6, "success_scene": "scene_006", "failure_scene": "scene_006", "success_bonus": "The combined might of all the heroes sends Loki flying across the room! He lands in a pile of vanilla ice cream tubs. It's over!" }
+      ],
+      "allow_custom": true
+    },
+    "scene_005c": {
+      "title": "Keep Fighting!",
+      "narrative": "Loki zapped the hero with a small magic bolt! But heroes don't give up! The hero shakes it off and gets right back up. 'Is that all you've got, Loki?' Try again!",
+      "dm_note": "Heroes never stay down! Make the action figure bounce back up dramatically. 'You can't stop a superhero that easily!' Then let them try again.",
+      "suggested_actions": [
+        { "label": "Get back up and hit Loki again — DOUBLE power this time!", "check": "Attack", "dc": 5, "success_scene": "scene_006", "failure_scene": "scene_006", "success_bonus": "SUPER HIT! Loki goes flying and crashes into the ice cream tower! He's defeated!" }
+      ],
+      "allow_custom": true
+    },
+    "scene_006": {
+      "title": "Victory! The Ice Cream is Saved!",
+      "narrative": "Loki slumps dramatically. 'Oh, very well. I suppose you heroes win this time. AGAIN.' He waves his hand and all the ice cream magically flies out of the boat and back to every ice cream shop and truck in New York City! All at once! Up and down the streets, kids who were crying are now cheering. People are getting scoops. Ice cream trucks are playing their music! DING DING DING! Back in the city, a huge crowd has gathered — everyone is waving and cheering for the heroes. 'HOORAY FOR THE AVENGERS! HOORAY FOR THE HEROES!'",
+      "dm_note": "BIG CELEBRATION! Make cheer sounds. Have the action figures 'wave' to the crowd. If you can, actually get out some ice cream or a treat as a real-world reward — 'And now WE get ice cream too, because we helped save it!' This is a great landing point if the child is getting tired, but there's one more short scene.",
+      "suggested_actions": [
+        { "label": "Wave to the cheering crowd and fly back to Avengers Tower!", "requires_roll": false, "next_scene": "scene_007" }
+      ],
+      "allow_custom": true
+    },
+    "scene_007": {
+      "title": "Heroes Return Home",
+      "narrative": "Back at Avengers Tower, Captain America is waiting with the biggest smile. 'I knew you could do it!' he says, giving everyone a thumbs up. Tony Stark says 'Not bad, kid. Not bad at all.' Thor laughs his big booming laugh. And somewhere far away, Loki is sitting alone, covered in vanilla ice cream, plotting his next (probably ice-cream-related) scheme. But for today — New York City is safe! The ice cream is saved! And the heroes are HOME.",
+      "dm_note": "Let your child do the final wrap-up — 'What does the hero do now? Do they eat ice cream? Go to sleep? Watch TV?' Whatever they say, it's the perfect ending. Then ask 'Do you want to play again? We could do the same adventure OR start a different one!' Great job, Game Master.",
+      "suggested_actions": [
+        { "label": "Celebrate with some well-earned ice cream!", "requires_roll": false, "next_scene": "scene_end" },
+        { "label": "Go patrol the city one more time, just to be safe!", "requires_roll": false, "next_scene": "scene_end" }
+      ],
+      "allow_custom": true
+    },
+    "scene_end": {
+      "title": "Adventure Complete — Heroes Win!",
+      "narrative": "Another amazing adventure for Earth's Mightiest Heroes! Loki has been stopped, the ice cream has been returned, and the city is full of happy kids. You did it! The day is saved!",
+      "dm_note": "Congratulations! You just ran your first Marvel adventure! Give your little hero a high five. If they want to play again, you can start from the beginning with a different hero, or next time Loki could steal something else (cookies? Puppies? Bedtime?) — the adventure can be remixed endlessly. The best adventures are the ones that make kids want to play again!",
+      "suggested_actions": [],
+      "allow_custom": false,
+      "is_end": true
+    }
+  }
+}
