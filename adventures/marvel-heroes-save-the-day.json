@@ -2,7 +2,7 @@
   "id": "marvel-heroes-save-the-day",
   "title": "Marvel Heroes Save the Day!",
   "type": "adventure",
-  "description": "Loki has stolen ALL the ice cream in New York City and the kids are crying! Spider-Man, Iron Man, Captain America, Thor, and the Hulk must team up to track down Loki's hideout and save the day. A short, simple adventure perfect for young Marvel fans and their action figures.",
+  "description": "Loki has stolen ALL the ice cream in New York City and the kids are crying! Spider-Man, Iron Man, Captain America, Thor, the Hulk, and Black Panther must team up to track down Loki's hideout and save the day. A short, simple adventure perfect for young Marvel fans and their action figures.",
   "recommended_players": "1-2 (parent + child)",
   "estimated_time": "20-30 minutes",
   "difficulty": "Beginner",
@@ -10,11 +10,12 @@
   "scenes": {
     "scene_001": {
       "title": "Avengers Assemble!",
-      "narrative": "RING RING! The alarm goes off at Avengers Tower! Captain America runs to the big screen. 'Avengers! Something terrible has happened — Loki has used his magic to steal ALL the ice cream in New York City! Every scoop, every cone, every tub — GONE! The kids in Central Park are crying. We need to find Loki's hideout and get that ice cream back. Who's going on this mission?'",
+      "narrative": "RING RING! The alarm goes off at Avengers Tower! Captain America runs to the big screen. 'Avengers! Something terrible has happened — Loki has used his magic to steal ALL the ice cream in New York City! Every scoop, every cone, every tub — GONE! The kids in Central Park are crying. We need to find Loki's hideout and get that ice cream back. Who's going on this mission?' Black Panther steps forward from the shadows. 'Wakanda is ready. Let's move.'",
       "dm_note": "Let your child pick which hero or heroes they want to play! Hold up the action figures and ask 'Who should we send?' They can pick one or all of them — there are no wrong answers. Make the alarm sound yourself (BEEP BEEP BEEP!) and do a silly Captain America voice. If they want to be ALL the heroes at once, that's perfect.",
       "suggested_actions": [
         { "label": "Send Spider-Man to swing through the city and look for clues!", "requires_roll": false, "next_scene": "scene_002" },
         { "label": "Send Iron Man to fly up high and scan the city with his suit!", "requires_roll": false, "next_scene": "scene_002" },
+        { "label": "Send Black Panther to leap across the rooftops and track the magic trail!", "requires_roll": false, "next_scene": "scene_002" },
         { "label": "Send the whole team — everyone go together!", "requires_roll": false, "next_scene": "scene_002" }
       ],
       "allow_custom": true
@@ -46,7 +47,8 @@
         { "label": "Spider-Man shoots webs to tie up the Frost Giants!", "check": "Attack", "dc": 7, "success_scene": "scene_004", "failure_scene": "scene_003b", "success_bonus": "THWIP THWIP! The webs wrap around the Frost Giants and they fall over like big blue trees! The path is clear!" },
         { "label": "Thor throws Mjolnir to knock them down!", "check": "Attack", "dc": 7, "success_scene": "scene_004", "failure_scene": "scene_003b", "success_bonus": "BOOM! The hammer hits them both and they tumble into the water with a giant SPLASH!" },
         { "label": "The Hulk just walks up and says RAARRR very loudly!", "check": "Intimidation", "dc": 6, "success_scene": "scene_004", "failure_scene": "scene_003b", "success_bonus": "The Frost Giants look at the Hulk... and they run away screaming! Nobody messes with the Hulk!" },
-        { "label": "Iron Man blasts them with repulsor rays!", "check": "Attack", "dc": 7, "success_scene": "scene_004", "failure_scene": "scene_003b", "success_bonus": "PEW PEW PEW! The repulsor blasts send the Frost Giants flying through the air!" }
+        { "label": "Iron Man blasts them with repulsor rays!", "check": "Attack", "dc": 7, "success_scene": "scene_004", "failure_scene": "scene_003b", "success_bonus": "PEW PEW PEW! The repulsor blasts send the Frost Giants flying through the air!" },
+        { "label": "Black Panther leaps through the air with his super sharp claws!", "check": "Attack", "dc": 7, "success_scene": "scene_004", "failure_scene": "scene_003b", "success_bonus": "SLASH! Black Panther's Vibranium claws send the Frost Giants stumbling backwards and crashing into the water!" }
       ],
       "allow_custom": true
     },
